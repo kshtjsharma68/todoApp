@@ -9,6 +9,10 @@ const AppNavigator = createStackNavigator({
 	taskAdd: {
 		screen: New
 	}
+}, {
+	defaultNavigationOptions: {
+		header: null 
+	}
 });
 
 export default createAppContainer(AppNavigator);

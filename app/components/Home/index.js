@@ -5,11 +5,18 @@ import Operations from './Operations';
 import Tasks from './Tasks'; 
 
 export default class Home extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			tasks: {}
+		}
+	}
+
 	render() {
 		return (
 			<View style={style.main}>
 				<ImageBackground source={require('../../Assets/Images/homebg.jpg')} style={style.background} >
-						<Tasks />
+						<Tasks />	
 						<Operations navigation={this.props.navigation}/>
 				</ImageBackground>
 			</View> 	  
