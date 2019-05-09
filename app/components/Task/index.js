@@ -3,8 +3,20 @@ import { ScrollView ,View, Text, TextInput, TouchableOpacity, Button, Keyboard, 
 import style from './style';
 import DatePicker from 'react-native-datepicker';
 import Icon from "react-native-vector-icons/Ionicons";
+import { TasksContext, TasksConsumer } from '../../Context/tasks';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-export default class Add extends React.Component {
+const checkForm = ({ title, area, date }) => {
+		let response = false;
+
+		if ( title !== undefined && area !== undefined && date !== undefined ) {
+			response = true;
+		}  
+
+		return response;
+	}
+
+class Add extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -14,11 +26,23 @@ export default class Add extends React.Component {
 		this.setState(input);
 	}
 
-	submit = _ => {
-		console.log(this.state)
+	submit = addTask => {
+		let msg = ''; 
+		try {
+			let check = checkForm(this.state);
+			if (check) {
+				addTask(this.state);
+				msg = 'All saved successfully...'; 
+				this.props.navigation.navigate('Home');
+			} else {
+				msg = 'Input values missing';
+			}
+		} catch (err) {
+			 msg = err;
+		} 
 		ToastAndroid.showWithGravity(
-				'All saved successfully...', ToastAndroid.SHORT, ToastAndroid.CENTER, 25, 50
-			);
+					msg, ToastAndroid.SHORT, ToastAndroid.CENTER, 25, 50
+				);
 	}
 
 	render() {
@@ -49,7 +73,7 @@ export default class Add extends React.Component {
 				<View>
 					<Text>Select completion date</Text>
 					<DatePicker
-				          style={{width: 200}}
+				          style={{width: '100%'}} 
 				          date={this.state.date} //initial date from state
 				          mode="date" //The enum of date, datetime and time
 				          placeholder="select date"
@@ -69,18 +93,24 @@ export default class Add extends React.Component {
 				              marginLeft: 36
 				            }
 				          }}
-				          onDateChange={(date) => {this.setState({date: date})}}
+				          onDateChange={date => this.setState({date: date})} 
 				        />
 				</View>
 				<View style={style.bottom}>
-					<TouchableOpacity 
-						style={style.submitButton}
-						onPress={this.submit}
-					>
-						<Icon name="ios-save" size={30} color="#ccc" />
-					</TouchableOpacity>
+					<TasksConsumer>
+						{({ state, addTask }) => (
+							<TouchableOpacity 
+								style={style.submitButton}
+								onPress={() => this.submit(addTask)}
+							><Icon name="ios-save" size={30} color="#ccc" />
+							</TouchableOpacity>
+						)}
+					</TasksConsumer>	
 				</View>
 			</ScrollView>	
 			);
 	}
 }
+
+Add.ContextType = TasksContext;
+export default Add;

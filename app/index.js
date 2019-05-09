@@ -10,19 +10,12 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import Home from './components/Home/index';
 import Navigator from './Navigation/index';
-import { TasksProvider } from './Context/index';
+import { TasksProvider } from './Context/tasks';
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tasks: {}
-    }
-  }
-
   render() {
     return (
-      <TasksProvider value={this.state}>
+      <TasksProvider>
           <Navigator />
       </TasksProvider>  
     );

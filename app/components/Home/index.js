@@ -5,12 +5,6 @@ import Operations from './Operations';
 import Tasks from './Tasks'; 
 
 export default class Home extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			tasks: {}
-		}
-	}
 
 	render() {
 		return (

@@ -1,31 +1,46 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, FlatList, TouchableOpacity  } from 'react-native';
 import style from './style';
-import { TasksConsumer } from '../../Context/index';
+import { TasksContext } from '../../Context/tasks';
 
-const TaskList = props => {
+const  __keyExtractor = (item, index) => `${index}`;
+
+const TasksList = ({tasks}) => {
+	if ( tasks.length ) {
 		return (
-				<TasksConsumer>
-				{context => <Button title="Click me" color="#CCCCCC" onPress={() => props.update(context)}/>}  
-				</TasksConsumer>
-			);
+			<FlatList
+				  data={tasks}
+				  keyExtractor={__keyExtractor}
+				  renderItem={({item}) => console.log(item)}
+				/>
+		);
+	} else {
+		return <Text></Text>;
 	}
+}
 
-export default class Tasks extends React.Component {
+const __renderItems = ({item}) => {
+	return (
+			<RenderedTask item={item}/>
+		);
+}
 
-	constructor(props) {
-		super(props); 
-	}
+function viewTask(item) {
+	console.log(item)
+}
 
-	updateState = context => {
-		console.log(context.set('tasks', {new: 1})) 
-	}
+const RenderedTask = ({item}) => {console.log(item)
+	return (
+			<TouchableOpacity onPress={(item) => console.log(item)}><Text>{item.key}</Text></TouchableOpacity>
+		);
+}
 
-	render() {
-		return (
-				<View style={style.tasks}>
-					<TaskList update={this.updateState}/>			
-				</View>
-			);
-	}
+export default function Tasks() {
+	let { tasks } = React.useContext( TasksContext );
+
+	return(
+			<View style={style.tasks}>
+				<TasksList tasks={tasks} />
+			</View>
+		);
 }
