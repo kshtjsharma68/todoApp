@@ -33,5 +33,15 @@ export default StyleSheet.create({
 	       backgroundColor:'#fff',
 	       borderRadius:50,
 	       margin: 5,
-	} 
+	},
+	task: {
+		width: '100%',
+		alignItems	: 'center',
+		marginTop: 5,
+		justifyContent	: 'center',
+		backgroundColor: '#4FA1A6', 
+	},
+	task_title: {
+		height: 30
+	}
 });

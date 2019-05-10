@@ -9,7 +9,11 @@ class TasksProvider extends React.Component {
 		super(props);
 
 		this.state = {
-			tasks: [],
+			tasks: [ {
+				title: 'first_task',
+				area: 'test description',
+				date: '01-01-2019'
+			} ],
 			addTask: this.addTask
 		}
 	}

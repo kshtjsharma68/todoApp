@@ -11,27 +11,21 @@ const TasksList = ({tasks}) => {
 			<FlatList
 				  data={tasks}
 				  keyExtractor={__keyExtractor}
-				  renderItem={({item}) => console.log(item)}
+				  renderItem={({item}) => RenderedTask(item)}
 				/>
 		);
 	} else {
-		return <Text></Text>;
+		return <View></View>;
 	}
+} 
+  
+function ViewTask(props) {
+	console.log(props)
 }
 
-const __renderItems = ({item}) => {
+const RenderedTask = item => {
 	return (
-			<RenderedTask item={item}/>
-		);
-}
-
-function viewTask(item) {
-	console.log(item)
-}
-
-const RenderedTask = ({item}) => {console.log(item)
-	return (
-			<TouchableOpacity onPress={(item) => console.log(item)}><Text>{item.key}</Text></TouchableOpacity>
+			<TouchableOpacity onPress={() => console.log(item)}><View style={style.task}><Text style={style.task_title}>{item.title}</Text></View></TouchableOpacity>
 		);
 }
 
